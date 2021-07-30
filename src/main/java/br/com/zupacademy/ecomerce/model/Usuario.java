@@ -1,5 +1,6 @@
 package br.com.zupacademy.ecomerce.model;
 
+import br.com.zupacademy.ecomerce.config.validators.UniqueValue;
 import br.com.zupacademy.ecomerce.dto.request.SenhaLimpa;
 
 import javax.persistence.*;
@@ -30,7 +31,7 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String login, @Valid @NotNull SenhaLimpa senhaLimpa) {
+    public Usuario(@Valid @UniqueValue(table = Usuario.class, field = "login") String login, @Valid @NotNull SenhaLimpa senhaLimpa) {
         this.login = login;
         this.senha = senhaLimpa.getSenhaComHash();
         this.momentoCriacao = Instant.now();

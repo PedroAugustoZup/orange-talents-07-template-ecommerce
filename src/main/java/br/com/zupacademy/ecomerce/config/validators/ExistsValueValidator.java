@@ -6,7 +6,7 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 
-public class UniqueValueValidator implements ConstraintValidator<UniqueValue, Object> {
+public class ExistsValueValidator implements ConstraintValidator<ExistsValue, Object> {
 
     private String field;
     private Class<?> table;
@@ -15,7 +15,7 @@ public class UniqueValueValidator implements ConstraintValidator<UniqueValue, Ob
     private EntityManager manager;
 
     @Override
-    public void initialize(UniqueValue constraintAnnotation) {
+    public void initialize(ExistsValue constraintAnnotation) {
         this.table = constraintAnnotation.table();
         this.field = constraintAnnotation.field();
     }

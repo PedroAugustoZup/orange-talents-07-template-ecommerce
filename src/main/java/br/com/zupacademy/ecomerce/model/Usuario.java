@@ -36,4 +36,12 @@ public class Usuario {
         this.senha = senhaLimpa.getSenhaComHash();
         this.momentoCriacao = Instant.now();
     }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getSenha() {
+        return senha;
+    }
 }

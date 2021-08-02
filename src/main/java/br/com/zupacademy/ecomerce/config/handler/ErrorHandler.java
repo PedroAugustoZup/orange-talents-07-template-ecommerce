@@ -1,5 +1,6 @@
 package br.com.zupacademy.ecomerce.config.handler;
 
+import br.com.zupacademy.ecomerce.config.handler.exception.CaracteristicasInvalidasException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
@@ -31,5 +32,10 @@ public class ErrorHandler {
         });
 
         return ResponseEntity.badRequest().body(listaErro);
+    }
+
+    @ExceptionHandler(CaracteristicasInvalidasException.class)
+    public ResponseEntity<ErrorDTO> handle(CaracteristicasInvalidasException exception){
+        return ResponseEntity.badRequest().body(new ErrorDTO("Caracterisica", exception.getMessage()));
     }
 }

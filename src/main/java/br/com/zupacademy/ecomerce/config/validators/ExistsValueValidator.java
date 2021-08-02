@@ -29,6 +29,6 @@ public class ExistsValueValidator implements ConstraintValidator<ExistsValue, Ob
         List<?> list = manager.createQuery("select 1 from "+table.getName()+" where "+field+"=:value")
                 .setParameter("value", o)
                 .getResultList();
-        return list.isEmpty();
+        return !list.isEmpty();
     }
 }

@@ -6,12 +6,16 @@ import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @TypeDefs({
         @TypeDef(name = "json", typeClass = JsonType.class)
@@ -51,12 +55,20 @@ public class Produto {
     @ManyToOne
     private Categoria categoria;
 
+    @NotNull
+    @Valid
+    @ManyToOne
+    private Usuario dono;
+
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private Set<ImagemProduto> imagens = new HashSet<>();
+
     @Deprecated
     public Produto() {
     }
 
     public Produto(String nome, Double valor, Integer quantidadeDisponivel,
-                   String descricao, List<Caracteristica> caracteristica, Categoria categoria) {
+                   String descricao, List<Caracteristica> caracteristica, Categoria categoria, Usuario dono) {
         this.nome = nome;
         this.valor = valor;
         this.quantidadeDisponivel = quantidadeDisponivel;
@@ -64,5 +76,16 @@ public class Produto {
         this.caracteristica = caracteristica;
         this.categoria = categoria;
         this.instanteCadastro = Instant.now();
+        this.dono = dono;
+    }
+
+    public void associaImagens(Set<String> links) {
+       Set<ImagemProduto> imagens = links.stream().map(link -> new ImagemProduto(this, link))
+               .collect(Collectors.toSet());
+       this.imagens.addAll(imagens);
+    }
+
+    public boolean pertenceAoUsuario(Usuario possivelDono) {
+        return this.dono.equals(possivelDono);
     }
 }

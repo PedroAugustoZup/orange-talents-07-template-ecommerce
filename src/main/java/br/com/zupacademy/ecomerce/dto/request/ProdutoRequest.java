@@ -1,10 +1,12 @@
 package br.com.zupacademy.ecomerce.dto.request;
 
 import br.com.zupacademy.ecomerce.config.handler.exception.CaracteristicasInvalidasException;
+import br.com.zupacademy.ecomerce.config.security.UsuarioLogado;
 import br.com.zupacademy.ecomerce.config.validators.ExistsValue;
 import br.com.zupacademy.ecomerce.model.Caracteristica;
 import br.com.zupacademy.ecomerce.model.Categoria;
 import br.com.zupacademy.ecomerce.model.Produto;
+import br.com.zupacademy.ecomerce.repository.UsuarioRepository;
 
 import javax.persistence.EntityManager;
 import javax.validation.constraints.Min;
@@ -47,10 +49,11 @@ public class ProdutoRequest {
         this.categoria = categoria;
     }
 
-    public Produto toModel(EntityManager manager) {
+    public Produto toModel(EntityManager manager, UsuarioRepository usuarioRepository, UsuarioLogado dono) {
         if(new Caracteristica().verificaCaracteristica(this.caracteristica)){
             return new Produto(this.nome, this.valor, this.quantidadeDisponivel, this.descricao,
-                    this.caracteristica, manager.find(Categoria.class, this.categoria));
+                    this.caracteristica, manager.find(Categoria.class, this.categoria),
+                    usuarioRepository.findByLogin(dono.getUsername()));
         }
         throw new CaracteristicasInvalidasException("As categorias não podem ser iguais");
     }

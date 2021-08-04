@@ -8,6 +8,7 @@ import br.com.zupacademy.ecomerce.model.Produto;
 import br.com.zupacademy.ecomerce.model.Usuario;
 import br.com.zupacademy.ecomerce.repository.UsuarioRepository;
 import br.com.zupacademy.ecomerce.utils.EmailService;
+import br.com.zupacademy.ecomerce.utils.EmailTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -44,7 +45,9 @@ public class PerguntaController {
         Pergunta pergunta = request.toModel(produto, usuario);
 
         manager.persist(pergunta);
-
-        return ResponseEntity.ok().body(emailService.enviaEmail("Pergunta Mercado Livre",pergunta.getTitulo(), usuario.getLogin()));
+        EmailTemplate email = EmailTemplate.assunto("Pergunta Mercado Livre")
+                .destinatario(usuario.getLogin())
+                .mensagem(pergunta.getTitulo());
+        return ResponseEntity.ok().body(emailService.enviaEmail(email));
     }
 }

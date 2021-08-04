@@ -18,7 +18,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/opiniao")
+@RequestMapping("/produto")
 public class OpiniaoController {
 
     @PersistenceContext
@@ -27,7 +27,7 @@ public class OpiniaoController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @PostMapping
+    @PostMapping("/opiniao")
     @Transactional
     public ResponseEntity<?> salvar(@RequestBody @Valid OpiniaoRequest request,
                                     @AuthenticationPrincipal UsuarioLogado usuarioLogado){

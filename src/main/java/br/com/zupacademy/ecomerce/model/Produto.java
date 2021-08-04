@@ -63,6 +63,14 @@ public class Produto {
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<ImagemProduto> imagens = new HashSet<>();
 
+    @NotNull
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private List<Opiniao> opinioes;
+
+    @NotNull
+    @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
+    private List<Pergunta> perguntas;
+
     @Deprecated
     public Produto() {
     }
@@ -77,6 +85,54 @@ public class Produto {
         this.categoria = categoria;
         this.instanteCadastro = Instant.now();
         this.dono = dono;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public Integer getQuantidadeDisponivel() {
+        return quantidadeDisponivel;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public Instant getInstanteCadastro() {
+        return instanteCadastro;
+    }
+
+    public List<Caracteristica> getCaracteristica() {
+        return caracteristica;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public Usuario getDono() {
+        return dono;
+    }
+
+    public Set<ImagemProduto> getImagens() {
+        return imagens;
+    }
+
+    public List<Opiniao> getOpinioes() {
+        return opinioes;
+    }
+
+    public List<Pergunta> getPerguntas() {
+        return perguntas;
     }
 
     public void associaImagens(Set<String> links) {

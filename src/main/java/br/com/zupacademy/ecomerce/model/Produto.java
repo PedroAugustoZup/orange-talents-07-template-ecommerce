@@ -7,10 +7,7 @@ import org.hibernate.annotations.TypeDefs;
 
 import javax.persistence.*;
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.List;
@@ -63,11 +60,9 @@ public class Produto {
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private Set<ImagemProduto> imagens = new HashSet<>();
 
-    @NotNull
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private List<Opiniao> opinioes;
 
-    @NotNull
     @OneToMany(mappedBy = "produto", cascade = CascadeType.MERGE)
     private List<Pergunta> perguntas;
 
@@ -143,5 +138,15 @@ public class Produto {
 
     public boolean pertenceAoUsuario(Usuario possivelDono) {
         return this.dono.equals(possivelDono);
+    }
+
+    public boolean abateDoEstoque(@Positive int quantidade) {
+        if(quantidade<=this.quantidadeDisponivel){
+            this.quantidadeDisponivel-=quantidade;
+            return true;
+        }
+
+        return false;
+
     }
 }

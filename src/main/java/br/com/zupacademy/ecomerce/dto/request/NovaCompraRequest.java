@@ -1,8 +1,8 @@
 package br.com.zupacademy.ecomerce.dto.request;
 
 import br.com.zupacademy.ecomerce.config.validators.ExistsValue;
-import br.com.zupacademy.ecomerce.model.Gateway;
 import br.com.zupacademy.ecomerce.model.Produto;
+import br.com.zupacademy.ecomerce.model.enums.Gateway;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;

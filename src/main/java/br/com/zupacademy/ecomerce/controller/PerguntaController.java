@@ -7,7 +7,7 @@ import br.com.zupacademy.ecomerce.model.Pergunta;
 import br.com.zupacademy.ecomerce.model.Produto;
 import br.com.zupacademy.ecomerce.model.Usuario;
 import br.com.zupacademy.ecomerce.repository.UsuarioRepository;
-import br.com.zupacademy.ecomerce.utils.EmailService;
+import br.com.zupacademy.ecomerce.service.EmailService;
 import br.com.zupacademy.ecomerce.utils.EmailTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -37,6 +37,10 @@ public class Usuario {
         this.momentoCriacao = Instant.now();
     }
 
+    public Long getId() {
+        return id;
+    }
+
     public String getLogin() {
         return login;
     }

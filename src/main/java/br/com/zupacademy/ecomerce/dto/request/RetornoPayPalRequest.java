@@ -13,14 +13,30 @@ public class RetornoPayPalRequest implements RetornoGatewayPagamento {
 
     @Min(0)
     @Max(1)
-    private int status;
+    private Integer status;
 
     @NotBlank
     private String idTransacao;
 
-    public RetornoPayPalRequest(int status, String idTransacao) {
+    public RetornoPayPalRequest(Integer status, String idTransacao) {
         this.status = status;
         this.idTransacao = idTransacao;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public void setIdTransacao(String idTransacao) {
+        this.idTransacao = idTransacao;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public String getIdTransacao() {
+        return idTransacao;
     }
 
     @Override

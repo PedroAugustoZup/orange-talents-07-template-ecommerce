@@ -4,6 +4,7 @@ import com.vladmihalcea.hibernate.type.json.JsonType;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
+import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.*;
 import javax.validation.Valid;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 })
 @Entity
 @Table(name = "tb_produto")
+@Validated
 public class Produto {
 
     @Id

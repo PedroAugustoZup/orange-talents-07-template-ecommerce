@@ -50,6 +50,9 @@ public class ProdutoController {
                                           @Valid ImagensRequest request,
                                           @AuthenticationPrincipal UsuarioLogado usuarioLogado) {
         Produto produto = manager.find(Produto.class, id);
+        if(produto == null){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Produto não encontrado");
+        }
         Usuario dono = usuarioRepository.findByLogin(usuarioLogado.getUsername());
         if (!produto.pertenceAoUsuario(dono)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);

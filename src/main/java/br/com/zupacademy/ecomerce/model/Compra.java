@@ -38,7 +38,7 @@ public class Compra {
     @NotNull
     private Gateway gateway;
 
-    @OneToMany(mappedBy = "compra", cascade = CascadeType.MERGE)
+    @OneToMany(mappedBy = "compra")
     private Set<Transacao> transacoes = new HashSet<>();
 
     @Deprecated
@@ -73,17 +73,32 @@ public class Compra {
                 '}';
     }
 
+    public Usuario getComprador() {
+        return comprador;
+    }
+
+    public Produto getProdutoComprado() {
+        return produtoComprado;
+    }
+
     public void tentativaDeCompra(RetornoGatewayPagamento request) {
         Transacao novaTransacao = request.toTransacao(this);
         Assert.isTrue(!this.transacoes.contains(novaTransacao), "Essa transação já existe");
-        Set<Transacao> trasacoesConcluidasComSucesso = this.transacoes.stream()
-                .filter(Transacao :: concluidaComSucesso).collect(Collectors.toSet());
 
-        Assert.isTrue(trasacoesConcluidasComSucesso.isEmpty(), "Essa compra já foi concluída");
+        Assert.isTrue(transacoesConcluidasComSucesso().isEmpty(), "Essa compra já foi concluída");
         this.transacoes.add(novaTransacao);
     }
 
+    private Set<Transacao> transacoesConcluidasComSucesso(){
+        Set<Transacao> transacoesConcluidasComSucesso = this.transacoes.stream()
+                .filter(Transacao :: concluidaComSucesso).collect(Collectors.toSet());
+        return transacoesConcluidasComSucesso;
+    }
     public String geraUrlDeRetorno(UriComponentsBuilder builder) {
         return this.gateway.getUrl(builder, this);
+    }
+
+    public boolean processadaComSucesso() {
+        return !transacoesConcluidasComSucesso().isEmpty();
     }
 }
